@@ -63,3 +63,49 @@ body {
     background-image: url('/home/background-home-tablet.jpg');
   }
 }
+
+
+.destination-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.destination-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/destination/background-destination-desktop.png');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .destination-bg {
+    background-image: url('/destination/background-destination-tablet.jpg');
+  }
+}
+
+@media (max-width: 640px) {
+  .destination-bg {
+    background-image: url('/destination/background-destination-mobile.jpg');
+  }
+}
+
+/* Add this to your tailwind.config.js under theme.extend.animation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 200s linear infinite;
+}

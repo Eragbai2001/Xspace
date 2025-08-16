@@ -4,9 +4,9 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="w-full min-h-screen pt-24 md:pt-40 lg:pt-72 pb-12 flex flex-col lg:flex-row items-center justify-start px-6 md:px-24 lg:px-40 bg-transparent">
+    <section className="w-full min-h-screen pt-40 md:pt-40 lg:pt-72 pb-12 flex flex-col lg:flex-row items-center justify-start px-6 md:px-24 lg:px-40 bg-transparent">
       <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:w-1/2 space-y-6 md:space-y-8 lg:space-y-6 mb-20 lg:mb-0">
-        <h2 className="font-condensed text-[#D0D6F9] text-[19px]  md:text-[28px] tracking-[2.7px] md:tracking-[3.38px] lg:tracking-[4.72px] ">
+        <h2 className="font-condensed text-[#D0D6F9] text-[28px]  md:text-[28px] tracking-[2.7px] md:tracking-[3.38px] lg:tracking-[4.72px] ">
           SO, YOU WANT TO TRAVEL TO
         </h2>
         <h1 className="font-bellefair text-white text-[80px] md:text-[150px] lg:text-[144px] uppercase leading-none">
@@ -23,7 +23,7 @@ const HeroSection = () => {
       <div className="lg:w-1/2 flex justify-center lg:justify-end">
         <Link href="/destination">
           <div className="group relative">
-            <div className="w-[150px] h-[150px] md:w-[242px] md:h-[242px] lg:w-[272px] lg:h-[272px] rounded-full bg-white flex items-center justify-center cursor-pointer transition-all duration-500 z-10 relative">
+            <div className="w-[242px] h-[242px] md:w-[242px] md:h-[242px] lg:w-[272px] lg:h-[272px] rounded-full bg-white flex items-center justify-center cursor-pointer transition-all duration-500 z-10 relative">
               <span className="font-bellefair text-[#0B0D17] text-xl md:text-[32px] tracking-[2px]">
                 EXPLORE
               </span>

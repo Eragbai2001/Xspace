@@ -1,10 +1,38 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [showSoundAlert, setShowSoundAlert] = useState(true);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Create audio element
+    audioRef.current = new Audio("/sounds/space-ambient.mp3");
+    audioRef.current.loop = true;
+
+    // Cleanup function
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleEnableSound = () => {
+    if (!audioRef.current) return;
+
+    audioRef.current.play().catch((error) => {
+      console.error("Audio playback failed:", error);
+    });
+    setIsPlaying(true);
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -14,12 +42,30 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  const toggleSound = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch((error) => {
+        console.error("Audio playback failed:", error);
+        // Most browsers require user interaction before playing audio
+        setIsPlaying(false);
+      });
+    }
+
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <>
       <nav className="fixed w-full flex items-center justify-between pl-6 md:pl-10 lg:pl-14 py-8 max-lg:py-0 max-md:py-5 z-50">
         {/* Logo */}
-        <div className="flex items-center max-lg:pr-7">
-          <Link href="/">
+        <div className="flex items-center max-lg:pr-7 relative group">
+          <div
+            onClick={toggleSound}
+            className="cursor-pointer relative transition-transform hover:scale-110">
             <div className="relative">
               <Image
                 src="/home/Subtract.png"
@@ -35,8 +81,19 @@ const Navbar = () => {
                 height={40}
                 className="hidden max-md:block object-contain"
               />
+
+              {/* Sound indicator */}
+              <div
+                className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
+                  isPlaying ? "bg-green-400 animate-pulse" : "bg-red-400"
+                }`}></div>
             </div>
-          </Link>
+
+            {/* Tooltip */}
+            <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-8 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-md text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+              {isPlaying ? "Mute sound" : "Play sound"}
+            </div>
+          </div>
         </div>
         {/* Mobile & Tablet Hamburger Button */}
         <button
@@ -62,29 +119,49 @@ const Navbar = () => {
 
         {/* Desktop Navigation Items */}
         <div className="bg-white/5 backdrop-blur-lg w-[936px] h-[96px] flex items-center relative max-md:hidden">
-          <ul className="flex w-full pl-44 max-lg:pl-24 pr-24 max-lg:pr-12 justify-between text-white font-condensed ">
+          <ul className="flex w-full pl-44 max-lg:pl-24 pr-24 max-lg:pr-12 justify-between text-white font-condensed">
             <li className="relative group h-full flex items-center">
               <Link href="/" className="nav_link py-9 relative">
                 <span className="font-bold mr-2">00</span> HOME
-                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-white"></div>
+                <div
+                  className={`absolute bottom-0 left-0 w-full h-[3px] ${
+                    pathname === "/"
+                      ? "bg-white"
+                      : "bg-transparent group-hover:bg-white/50"
+                  }`}></div>
               </Link>
             </li>
             <li className="relative group h-full flex items-center">
               <Link href="/destination" className="nav_link py-9 relative">
                 <span className="font-bold mr-2">01</span> DESTINATION
-                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-transparent group-hover:bg-white/50"></div>
+                <div
+                  className={`absolute bottom-0 left-0 w-full h-[3px] ${
+                    pathname === "/destination"
+                      ? "bg-white"
+                      : "bg-transparent group-hover:bg-white/50"
+                  }`}></div>
               </Link>
             </li>
             <li className="relative group h-full flex items-center">
               <Link href="/crew" className="nav_link py-9 relative">
                 <span className="font-bold mr-2">02</span> CREW
-                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-transparent group-hover:bg-white/50"></div>
+                <div
+                  className={`absolute bottom-0 left-0 w-full h-[3px] ${
+                    pathname === "/crew"
+                      ? "bg-white"
+                      : "bg-transparent group-hover:bg-white/50"
+                  }`}></div>
               </Link>
             </li>
             <li className="relative group h-full flex items-center">
               <Link href="/technology" className="nav_link py-9 relative">
                 <span className="font-bold mr-2">03</span> TECHNOLOGY
-                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-transparent group-hover:bg-white/50"></div>
+                <div
+                  className={`absolute bottom-0 left-0 w-full h-[3px] ${
+                    pathname === "/technology"
+                      ? "bg-white"
+                      : "bg-transparent group-hover:bg-white/50"
+                  }`}></div>
               </Link>
             </li>
           </ul>
