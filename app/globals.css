@@ -109,3 +109,36 @@ body {
 .animate-spin-slow {
   animation: spin-slow 200s linear infinite;
 }
+
+
+
+.crew-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.crew-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/crew/background-crew-desktop.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .crew-bg {
+    background-image: url('/crew/background-crew-tablet.jpg');
+  }
+}
+
+@media (max-width: 640px) {
+  .crew-bg {
+    background-image: url('/crew/background-crew-mobile.jpg');
+  }
+}
