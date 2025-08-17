@@ -1,67 +1,24 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAudio } from "@/components/AudioProvider"; // 👈 use the global provider
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [showSoundAlert, setShowSoundAlert] = useState(true);
   const pathname = usePathname();
 
-  useEffect(() => {
-    // Create audio element
-    audioRef.current = new Audio("/sounds/space-ambient.mp3");
-    audioRef.current.loop = true;
+  // 👇 comes from context (persists across pages)
+  const { isPlaying, toggleSound } = useAudio();
 
-    // Cleanup function
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
-
-  const handleEnableSound = () => {
-    if (!audioRef.current) return;
-
-    audioRef.current.play().catch((error) => {
-      console.error("Audio playback failed:", error);
-    });
-    setIsPlaying(true);
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  const toggleSound = () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch((error) => {
-        console.error("Audio playback failed:", error);
-        // Most browsers require user interaction before playing audio
-        setIsPlaying(false);
-      });
-    }
-
-    setIsPlaying(!isPlaying);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <>
       <nav className="fixed w-full flex items-center justify-between pl-6 md:pl-10 lg:pl-14 py-8 max-lg:py-0 max-md:py-5 z-50">
-        {/* Logo */}
+        {/* Logo + Sound Control */}
         <div className="flex items-center max-lg:pr-7 relative group">
           <div
             onClick={toggleSound}
@@ -95,6 +52,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+
         {/* Mobile & Tablet Hamburger Button */}
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 mr-6 z-60"
@@ -114,7 +72,7 @@ const Navbar = () => {
             }`}></span>
         </button>
 
-        {/* Extended Horizontal Line that continues into the navbar */}
+        {/* Extended Horizontal Line */}
         <div className="hidden lg:block h-px bg-white/25 absolute left-[167px] right-[896px] top-1/2 -translate-y-1/2 z-10"></div>
 
         {/* Desktop Navigation Items */}
@@ -173,13 +131,11 @@ const Navbar = () => {
         className={`fixed top-0 right-0 h-full w-[254px] bg-[#0B0D17]/15 backdrop-blur-[40px] transform transition-transform duration-300 ease-in-out z-40 md:hidden ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}>
-        {/* Close button */}
         <button
           className="absolute top-8 right-6 w-8 h-8 flex items-center justify-center"
           onClick={closeMenu}
           aria-label="Close menu"></button>
 
-        {/* Mobile Navigation Items */}
         <nav className="pt-32 px-8">
           <ul className="space-y-8 text-white font-condensed tracking-[0.2em] text-base">
             <li>
@@ -220,7 +176,6 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-30 md:hidden"

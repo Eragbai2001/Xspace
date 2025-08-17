@@ -1,26 +1,24 @@
 import type { Metadata } from "next";
 import { Bellefair, Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
+import { AudioProvider } from "@/components/AudioProvider";
 
 export const bellefair = Bellefair({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--font-bellefair",
-
 });
 
 export const barlow = Barlow({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-barlow",
- 
 });
 
 export const barlowCondensed = Barlow_Condensed({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-barlow-condensed",
-
 });
 
 export const metadata: Metadata = {
@@ -36,9 +34,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bellefair.variable} ${barlow.variable} ${barlowCondensed.variable}`}
-    >
-      <body>{children}</body>
+      className={`${bellefair.variable} ${barlow.variable} ${barlowCondensed.variable}`}>
+      <AudioProvider>
+        <body>{children}</body>
+      </AudioProvider>
     </html>
   );
 }
