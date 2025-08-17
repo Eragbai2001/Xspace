@@ -3,19 +3,19 @@ import { Bellefair, Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { AudioProvider } from "@/components/AudioProvider";
 
-export const bellefair = Bellefair({
+const bellefair = Bellefair({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--font-bellefair",
 });
 
-export const barlow = Barlow({
+const barlow = Barlow({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-barlow",
 });
 
-export const barlowCondensed = Barlow_Condensed({
+const barlowCondensed = Barlow_Condensed({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-barlow-condensed",
