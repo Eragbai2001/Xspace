@@ -31,7 +31,7 @@ export default function HeadphoneNotification() {
         >
           <Bell size={18} />
           <span className="text-sm font-medium">
-            For a better experience, please use headphones 🎧
+            For a better experience, please turn on the sound from the logo and use headphones 🎧
           </span>
         </motion.div>
       )}
