@@ -23,9 +23,10 @@ const barlowCondensed = Barlow_Condensed({
 
 export const metadata: Metadata = {
   title: "X-Space | Immersive Space Travel Experience",
-  description: "Embark on an immersive journey through space with interactive visuals and ambient sounds",
+  description:
+    "Embark on an immersive journey through space with interactive visuals and ambient sounds",
   icons: {
-    icon: '/home/Logo.png',
+    icon: "/home/Logo.png",
   },
 };
 
